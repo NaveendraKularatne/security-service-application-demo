@@ -20,6 +20,11 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User saveUser(User user) {
+        if (user.getName() == null) {
+            throw new RuntimeException("User name cannot be empty");
+        } else if (user.getName().length() > 50) {
+            throw new RuntimeException("Name length cannot be more than 50");
+        }
         log.info("Saving new user {} to the database", user.getName());
         return userRepo.save(user);
     }
