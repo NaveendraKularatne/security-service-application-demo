@@ -3,11 +3,14 @@ package com.kularatne.userservice.api;
 import com.kularatne.userservice.domain.Role;
 import com.kularatne.userservice.domain.User;
 import com.kularatne.userservice.service.UserService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController //To make the class controller
@@ -35,16 +38,45 @@ public class UserResource {
     //Save a user
     @PostMapping("/user/save")
     public ResponseEntity<User> createUser(@RequestBody User user) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/user/save").toUriString());
         log.info("UserController: createUser: Creating user");
-        return ResponseEntity.ok().body(userService.saveUser(user));
+
+        //it's more precise if we can send 201 instead of sending 200 (success),
+        // because these methods are creating something (resources are created) inside the server
+        return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
 
     //Save a role
     @PostMapping("/role/save")
     public ResponseEntity<Role> saveRole(@RequestBody Role role){
-        log.info("UserResponse(UserController: saveRole: Saving a role");
-        return ResponseEntity.ok().body(userService.saveRole(role));
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("api/role/save").toUriString());
+        log.info("UserResponse(UserController): saveRole: Saving a role");
+        return ResponseEntity.created(uri).body(userService.saveRole(role));
+    }
+
+    //Add a role to a specific user
+    @PostMapping("/role/addroletouser")
+    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form){
+        log.info("UserResponse(UserController): addRoleToUser: Assigning role to user:");
+        userService.addRoleToUser(form.getUsername(), form.getRoleName());
+        return ResponseEntity.ok().build();
     }
 }
+
+@Data
+class RoleToUserForm {
+    private String username;
+    private String roleName;
+}
+
+
+
+
+
+
+
+
+
+
 
 
