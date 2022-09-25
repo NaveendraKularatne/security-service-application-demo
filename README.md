@@ -11,10 +11,10 @@ And whenever the user needs to access the information, the user will send the to
 
 Another important concept is the concept of authentication and authorization.
 
-•	Authentication - Basically, authentication is verifying who you are. So let's say you want to access an application, you need to provide some email or username and password. 
+•  Authentication - Basically, authentication is verifying who you are. So let's say you want to access an application, you need to provide some email or username and password. 
 So this is verifying who you are. 
 
-•	Authorization can be recognize as everybody has access to the application, but they don't have the same access to the resources.
+•	 Authorization can be recognize as everybody has access to the application, but they don't have the same access to the resources.
 Let's say we have some organization, and they have simple users. They have managers, they have admins.
 So they can all access the application. That means all authenticate with the application because they need them to be able to access the application to do whatever they need to do in the company. 
 But they can't do the same things. Or they can access the same resources. 
